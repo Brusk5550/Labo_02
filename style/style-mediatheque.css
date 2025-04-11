@@ -1,0 +1,147 @@
+/* Style moderne pour la médiathèque */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, black, darkred, purple);
+  background-size: 300% 300%;
+  animation: bgAnimation 20s ease infinite;
+  color: white;
+}
+
+@keyframes bgAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+header {
+  text-align: center;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  font-size: 2.8em;
+  color: crimson;
+  margin-bottom: 10px;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 30px;
+}
+
+.media-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  width: 260px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease;
+}
+
+.media-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
+}
+
+.media-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  transition: transform 0.5s;
+}
+
+.media-card img:hover {
+  transform: scale(1.03);
+}
+
+.media-card h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: lightcoral;
+}
+
+.media-card p {
+  font-size: 1em;
+  color: lavenderblush;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: crimson;
+  border: none;
+  color: white;
+  font-size: 1em;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: darkred;
+  transform: scale(1.05);
+}
+/* Style des boutons désactivés */
+input[type="submit"]:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+footer {
+  background-color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  color: lightgray;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+  .media-card {
+    width: 90%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*div
+{
+  display: flex;
+}*/
