@@ -1,13 +1,8 @@
 <?php 
 
-	function connexion()
-	{			//										Numéro de port 08 mysql et 06 mariadb
-		$ma_bdd= new PDO("mysql:dbname=mediatheque;host=localhost;port=3308" , "root" , "" , 
-					   //  type de DB  nom de la DB nom de l'adresse (ou IP)  nom utilisateur  mdp
-
-				//  Petite ligne de commande moignonne tout plein !
-			array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'', PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-	return $ma_bdd;
+	function connexion(){
+		$ma_bdd= new PDO("mysql:dbname=mediatheque;host=localhost;port=3308", "root", "", array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'', PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    return $ma_bdd;
 	}
 
 	function affiche_films_tableaux($data_base, &$id, &$titre, &$resume, &$annee, &$poster, &$duree, &$realisateur, $page)		//  Récupère les données explicitement pour manipuler les variables et y implémenter les valeurs afin de les récupérer sur l'affichage de l'accueil. {On verra si on peut utiliser des bouts de code pour la recherche.}

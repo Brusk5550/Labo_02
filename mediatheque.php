@@ -57,6 +57,9 @@
 		<p>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Modi delectus aliquam debitis placeat cum a architecto velit ullam itaque, nemo, harum. Hic, aliquid. Unde cupiditate nostrum ullam magni, eum molestias!</p>
 		<p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Odio ad repudiandae expedita libero, maiores porro dicta consequatur quos.</p>
 
+    <!-- Debug -->
+    <p><?php echo $_SESSION['numéro_page'] ?></p>
+
 	</header>
 
 
@@ -87,7 +90,7 @@
 		while ($i<4){
 			echo '<div class="media-card">';
 			echo "$titre[$i]";
-			echo '<img src="images/'.$poster[$i].'" alt="Poster de film.png">';
+			echo '<img src="img/BD_films/'.$poster[$i].'" alt="Poster de film">';
 			echo $resume[$i];
 			echo $annee[$i];
 			echo $duree[$i];
