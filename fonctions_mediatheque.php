@@ -18,23 +18,24 @@
 		foreach ($tableau as $lignes) {
 			foreach ($lignes as $films) {
 				if ($i%7==0){
-				$id[$i/7]=$films."<br>";}	//  En mettant des modulos, on peut ranger les onfos en fonction des besoins.
+				$id[$i/7]=$films;}	//  En mettant des modulos, on peut ranger les onfos en fonction des besoins.
 				if ($i%7==1){
-				$titre[($i-1)/7]=$films."<br>";}
+				$titre[($i-1)/7]=$films;}
 				if ($i%7==2){
-				$resume[($i-2)/7]=$films."<br>";}
+				$resume[($i-2)/7]=$films;}
 				if ($i%7==3){
-				$annee[($i-3)/7]=$films."<br>";}
+				$annee[($i-3)/7]=$films;}
 				if ($i%7==4){
 				$poster[($i-4)/7]=$films;}
 				if ($i%7==5){
-				$duree[($i-5)/7]=$films."<br>";}
+				$duree[($i-5)/7]=$films;}
 				if ($i%7==6){
-				$realisateur[($i-6)/7]=$films."<br>";}
+				$realisateur[($i-6)/7]=$films;}
 				$i++;
 			}
 		}
 	}
+
 	function genre_films($data_base, $genre_ident)		//  Transformation du tableau des genres étrange en un truc plus simple à manipuler pour la recherche.
 	{
 		$sql="select distinct genres_nom from genres join films_genres on genres_id=fg_genres_id where genres_id in (select fg_genres_id from films_genres join films on films_id=fg_films_id where films_id=:genre_ident);";
@@ -109,15 +110,86 @@
 		return $intruction;
 	}
 
-//  function options_mot_clef($nom){}
-//  On peut chercher avec un like dans les synopsis et titres.
+  //  function options_mot_clef($nom){}
+  //  On peut chercher avec un like dans les synopsis et titres.
 
 
-	function union_recherches($genre, $realisateurs, $acteurs){}
+  function union_recherches($genres = [], $realisateur =[], $acteurs = []) {
+    $query = "SELECT DISTINCT films.films_titre 
+              FROM films 
+              LEFT JOIN films_genres ON films.films_id = films_genres.fg_films_id 
+              LEFT JOIN genres ON genres.genres_id = films_genres.fg_genres_id 
+              LEFT JOIN films_acteurs ON films.films_id = films_acteurs.fa_films_id 
+              LEFT JOIN acteurs ON acteurs.acteurs_id = films_acteurs.fa_acteurs_id 
+              LEFT JOIN realisateurs ON realisateurs.real_id = films.films_real_id 
+              WHERE 1=1;";
+
+    if (!empty($genres)) {
+      $genreChoix = [];
+      foreach ($genres as $genre) {
+        $genreChoix[] = 'genres.genres_nom = "' . $genre . '"';
+      }
+      $query .= " AND (" . implode(' OR ', $genreChoix) . ")";
+    }
+
+    if (!empty($realisateur)) {
+      $realisateurchoix = [];
+      foreach ($realisateur as $realisateur) {
+        $realisateurChoix[] = 'realisateurs.real_nom = "' . $realisateur . '"';
+      }
+      $query .= " AND (" . implode(' OR ', $realisateurChoix) . ")";
+    } 
+
+    if (!empty($acteurs)) {
+      $acteurChoix = [];
+      foreach ($acteurs as $acteur) {
+        $acteurChoix[] = 'acteurs.acteurs_nom = "' . $acteur . '"';
+      }
+      $query .= " AND (" . implode(' OR ', $acteurChoix) . ")";
+    }
+
+    $query .= ";";
+
+    return $query;
+  }
 
 
 
+  function info_films($db,$id){
+    $sql="SELECT DISTINCT films_titre, films_resume, films_annee, films_affiche, films_duree, real_nom FROM films 
+              LEFT JOIN films_genres ON films.films_id = films_genres.fg_films_id 
+              LEFT JOIN genres ON genres.genres_id = films_genres.fg_genres_id 
+              LEFT JOIN films_acteurs ON films.films_id = films_acteurs.fa_films_id 
+              LEFT JOIN acteurs ON acteurs.acteurs_id = films_acteurs.fa_acteurs_id 
+              LEFT JOIN realisateurs ON realisateurs.real_id = films.films_real_id 
+              WHERE 1=1 and films_id=:id;";
+    $intruction=$db -> prepare($sql);
+    $intruction -> bindvalue('id', $id, PDO::PARAM_INT);
+    $intruction -> execute();
+    $intruction -> setfetchmode(PDO::FETCH_ASSOC);
+    $info_film=$intruction -> fetchall();
+    return $info_film;
+  }
 
+  function info_genre($db, $id){
+    $sql="select genres_nom from genres where genres_id in (select fg_genres_id from films_genres where fg_films_id = :id);";
+    $intruction=$db -> prepare($sql);
+    $intruction -> bindvalue('id', $id, PDO::PARAM_INT);
+    $intruction -> execute();
+    $intruction -> setfetchmode(PDO::FETCH_ASSOC);
+    $genre_film=$intruction -> fetchall();
+    return $genre_film;
+  }
+
+  function info_acteur($db, $id){
+    $sql="select acteurs_nom from acteurs where acteurs_id in (select fa_acteurs_id from films_acteurs where fa_films_id = :id);";
+    $intruction=$db -> prepare($sql);
+    $intruction -> bindvalue('id', $id, PDO::PARAM_INT);
+    $intruction -> execute();
+    $intruction -> setfetchmode(PDO::FETCH_ASSOC);
+    $acteurs_film=$intruction -> fetchall();
+    return $acteurs_film;
+  }
 
 
 ?>

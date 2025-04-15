@@ -14,7 +14,7 @@ CREATE TABLE films (
     films_annee YEAR,
     films_affiche VARCHAR(255),
     films_duree SMALLINT CHECK (films_duree > 0 AND films_duree < 720),
-    films_real_id INT REFERENCES realisateurs
+    utilisateursfilms_real_id INT REFERENCES realisateurs
 );
 DROP TABLE IF EXISTS genres;
 CREATE TABLE genres (
@@ -674,3 +674,34 @@ INSERT INTO films_acteurs VALUES (60,32);
 INSERT INTO films_acteurs VALUES (61,23);
 INSERT INTO films_acteurs VALUES (61,106);
 INSERT INTO films_acteurs VALUES (61,108);
+
+
+
+
+select * from films where films_id=1;
+
+SELECT films_titre, films_resume, films_annee, films_affiche, films_duree, genres_nom, acteurs_nom, real_nom FROM films 
+              LEFT JOIN films_genres ON films.films_id = films_genres.fg_films_id 
+              LEFT JOIN genres ON genres.genres_id = films_genres.fg_genres_id 
+              LEFT JOIN films_acteurs ON films.films_id = films_acteurs.fa_films_id 
+              LEFT JOIN acteurs ON acteurs.acteurs_id = films_acteurs.fa_acteurs_id 
+              LEFT JOIN realisateurs ON realisateurs.real_id = films.films_real_id 
+              WHERE 1=1;
+              
+SELECT * FROM films 
+              LEFT JOIN films_genres ON films.films_id = films_genres.fg_films_id 
+              LEFT JOIN genres ON genres.genres_id = films_genres.fg_genres_id 
+              LEFT JOIN films_acteurs ON films.films_id = films_acteurs.fa_films_id 
+              LEFT JOIN acteurs ON acteurs.acteurs_id = films_acteurs.fa_acteurs_id 
+              LEFT JOIN realisateurs ON realisateurs.real_id = films.films_real_id 
+              WHERE 1=1;
+              
+select genres_nom from genres where genres_id in (select fg_genres_id from films_genres where fg_films_id = 3);
+
+select * from genres;
+select * from films;
+select * from films_genres;
+select * from films_acteurs;
+SELECT * from acteurs;
+
+select acteurs_nom from acteurs where acteurs_id in (select fa_acteurs_id from films_acteurs where fa_films_id = 3);

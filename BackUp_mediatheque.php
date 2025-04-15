@@ -1,17 +1,18 @@
 <?php 
 	require_once ("fonctions_mediatheque.php");
 	session_start();
-	if (!isset($_GET['action']) || $_SESSION["numéro_page"]<0)
+	if (!isset($_POST['action']) || $_SESSION["numéro_page"]<0)
 	{
 		$_SESSION['numéro_page']=0;	//  Attention, variable globale qui pourrait entrer en compétition avec les pages dans le fichier résultat...
+		echo "probleme";
 	}
 	else
 	{
-		if ($_GET['action']=="Précédent")
+		if ($_POST['action']=="Précédent")
 		{
 			$_SESSION['numéro_page']-=4;
 		}
-		if ($_GET['action']=="Suivant")
+		if ($_POST['action']=="Suivant")
 		{
 			$_SESSION['numéro_page']+=4;
 		}
@@ -39,38 +40,34 @@
 	}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style/style-mediatheque.css">
-	<title>Index</title>
+	<title>Document</title>
 </head>
 <body>
 	
 	<h1>Labo médiathèque PHP/SQL</h1>
-
-  <form action="recherche.php" method="post">
+	<form action="recherche.php" method="post">
 		<label for="recherche">Rechercher : </label>
 		<input type="text" name="action" id="recherche_id">
 	</form>
-  
 	<header>
 		<p>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Modi delectus aliquam debitis placeat cum a architecto velit ullam itaque, nemo, harum. Hic, aliquid. Unde cupiditate nostrum ullam magni, eum molestias!</p>
 		<p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Odio ad repudiandae expedita libero, maiores porro dicta consequatur quos.</p>
 
-    <!-- Debug -->
-    <p><?php #echo $_SESSION['numéro_page'] ?></p>
-
 	</header>
 
 
-	<form action="mediatheque.php" method="get">
+	<form action="BackUp_mediatheque.php" method="post">
 <!-- 
 	<input type="submit" name="action" value="Précédent" <?php //if(!isset($_POST['action']) || $_SESSION['numéro_page']==0){echo "disabled";} ?>>
  -->
-	<button type="submit" name="action" value="Précédent" <?php if(!isset($_GET['action']) || $_SESSION['numéro_page']==0){echo "disabled";} ?>>Précédent</button>
+	<button type="submit" name="action" value="Précédent" <?php if(!isset($_POST['action']) || $_SESSION['numéro_page']==0){echo "disabled";} ?>>Précédent</button>
 	<button type="submit" name="action" value="Suivant">Suivant</button>	
 
 	<?php 
@@ -92,13 +89,23 @@
 		echo "<main>";
 		while ($i<4){
 			echo '<div class="media-card"><a href="fiche.php?id='.$id[$i].'">';
-			echo "<h2>".$titre[$i]."</h2>";
-			echo '<img src="img/BD_films/'.$poster[$i].'" alt="'.$titre[$i].'">';
-			echo "</a></div>\n\t\t";
+			echo "$titre[$i]";
+			echo '<img src="img/BD_films/'.$poster[$i].'" alt="Poster de film.png">';
+			echo $resume[$i];
+			echo $annee[$i];
+			echo $duree[$i];
+			foreach ($genre as $type) 
+			{
+				foreach ($type as $sous_genre)
+				{
+					echo "$sous_genre ";
+				}
+			}
 			$i++;
+			echo '</a></div>';
 		}
 		echo "</main>";
-    
+
 
 
 
