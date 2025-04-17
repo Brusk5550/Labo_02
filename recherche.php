@@ -1,6 +1,7 @@
 <?php 
 	require_once ("fonctions_mediatheque.php");
 	session_start();
+  $_SESSION['fiche']=true;
 	if (!isset($_SESSION['numéro_page']) || ($_POST['action']!="Suivant" && $_POST['action']!="Précédent"))
 	{
 		$_SESSION["numéro_page"]=0;

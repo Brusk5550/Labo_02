@@ -36,11 +36,8 @@ header {
 
 h1 {
   font-size: 2.8em;
-  color: rgb(255, 255, 255);
-  margin-bottom: 2%;
-  text-align: center;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 30px;
+  color: crimson;
+  margin-bottom: 10px;
 }
 
 main {
@@ -49,12 +46,10 @@ main {
   justify-content: center;
   padding: 30px;
   gap: 30px;
-  background-color: #2a2a2a;
-  margin-top: 3%;
 }
 
 .media-card {
-  background-color: rgba(4 0 0);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   width: 260px;
   padding: 20px;
@@ -72,14 +67,14 @@ main {
 .media-card img {
   width: 100%;
   border-radius: 12px;
+  margin-bottom: 15px;
   transition: transform 0.5s;
-
 }
 
 .media-card .titre-film{
-  text-align: left;
+  text-align: center;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.5em;;
 }
 
 .media-card h2 {
@@ -110,7 +105,7 @@ button:hover {
   transform: scale(1.05);
 }
 /* Style des boutons désactivés */
-button[type="submit"]:disabled {
+input[type="submit"]:disabled {
   background-color: lightgray;
   color: gray;
   cursor: not-allowed;
@@ -147,53 +142,6 @@ footer {
     opacity: 1;
     transform: translateY(0);
   }
-}
-img{
-  height: auto;
-  
-}
-
-.media-card .titre-film{
-  text-align: center;
-  min-block-size: 5.5em;
-  font-weight: bold;
-  font-size: 1.5em;;
-  text-decoration: none !important;
-}
-a{
-  text-decoration: none;
-  color: white;
-}
-
-.recherche{
-  padding-top: 2%;
-  text-align: left;
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-.mediatheque1{
-  padding-top:2%;
-}
-
-#recherche_id{
-  border:94% 6% 95% 5% / 10% 91% 9% 90% ;
-  width: 20%;
-}
-
-.fiche{
-  display: flex;
-}
-.fiche-infos{
-  padding-left: 2%;
-  padding-right: 30%;
-  text-align: justify;
-}
-.recherche-fiche{
-  padding-top: 2%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5em;
 }
 /*div
 {

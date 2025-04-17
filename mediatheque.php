@@ -1,20 +1,27 @@
 <?php 
 	require_once ("fonctions_mediatheque.php");
 	session_start();
+
 	if (!isset($_GET['action']) || $_SESSION["numéro_page"]<0)
 	{
 		$_SESSION['numéro_page']=0;	//  Attention, variable globale qui pourrait entrer en compétition avec les pages dans le fichier résultat...
+    $_SESSION['fiche']=false;
 	}
 	else
 	{
-		if ($_GET['action']=="Précédent")
-		{
-			$_SESSION['numéro_page']-=4;
-		}
-		if ($_GET['action']=="Suivant")
-		{
-			$_SESSION['numéro_page']+=4;
-		}
+    if ( ! $_SESSION['fiche']) {
+      if ($_GET['action']=="Précédent")
+      {
+        $_SESSION['numéro_page']-=4;
+      }
+      if ($_GET['action']=="Suivant")
+      {
+        $_SESSION['numéro_page']+=4;
+      }
+    }
+    else {
+     $_SESSION['fiche']=false;
+    }
 	}
 	try
 	{
@@ -48,23 +55,14 @@
 	<title>Index</title>
 </head>
 <body>
-	
-	<h1>Labo médiathèque PHP/SQL</h1>
 
-  <form action="recherche.php" method="post">
-		<label for="recherche">Rechercher : </label>
-		<input type="text" name="action" id="recherche_id">
-	</form>
-  
 	<header>
-		<p>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Modi delectus aliquam debitis placeat cum a architecto velit ullam itaque, nemo, harum. Hic, aliquid. Unde cupiditate nostrum ullam magni, eum molestias!</p>
-		<p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Odio ad repudiandae expedita libero, maiores porro dicta consequatur quos.</p>
-
-    <!-- Debug -->
-    <p><?php #echo $_SESSION['numéro_page'] ?></p>
-
+    <a href="mediatheque.php"><img src="img/title.png" alt="Logo"></a>
+    <form action="recherche.php" method="post">
+      <label for="recherche">Rechercher : </label>
+      <input type="text" name="action" id="recherche_id">
+    </form>
 	</header>
-
 
 	<form action="mediatheque.php" method="get">
 <!-- 
@@ -92,7 +90,7 @@
 		echo "<main>";
 		while ($i<4){
 			echo '<div class="media-card"><a href="fiche.php?id='.$id[$i].'">';
-			echo "<h2>".$titre[$i]."</h2>";
+			echo '<h2 class="titre-film">'.$titre[$i]."</h2>";
 			echo '<img src="img/BD_films/'.$poster[$i].'" alt="'.$titre[$i].'">';
 			echo "</a></div>\n\t\t";
 			$i++;
